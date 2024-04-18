@@ -45,13 +45,33 @@ export function Home() {
   });
 
   useEffect(() => {
+    let interval: number;
     if (activeCycle) {
-      setInterval(() => {
+      interval = setInterval(() => {
         setAmountSecondPassed(
           differenceInSeconds(new Date(), activeCycle.startDate)
         );
       }, 1000);
     }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [activeCycle]);
+
+  useEffect(() => {
+    let interval: number;
+    if (activeCycle) {
+      interval = setInterval(() => {
+        setAmountSecondPassed(
+          differenceInSeconds(new Date(), activeCycle.startDate)
+        );
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
   }, [activeCycle]);
 
   function handleCreateNewCycle(data: NewCycleFormData) {
@@ -66,6 +86,7 @@ export function Home() {
 
     setCycles((state) => [...state, newCycle]);
     setActiveCycleId(id);
+    setAmountSecondPassed(0);
     reset();
   }
 
@@ -80,6 +101,12 @@ export function Home() {
 
   const task = watch("task");
   const isSubmitDisabled = !task;
+
+    useEffect(() => {
+      if (activeCycle) {
+        document.title = `${minutes}:${seconds}`;
+      }
+    }, [minutes, seconds, activeCycle]);
 
   return (
     <HomeContainer>
