@@ -1,17 +1,18 @@
-import { HandPalm, Play } from "phosphor-react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
 import { differenceInSeconds } from "date-fns";
-import { NewCycleForm } from "./components/NewCycleForm";
 import * as zod from "zod";
+
+import { NewCycleForm } from "./components/NewCycleForm";
+import { Countdown } from "./components/Countdown";
+import { HandPalm, Play } from "phosphor-react";
 
 import {
   HomeContainer,
   StartCountdownButton,
   StopCountdownButton,
 } from "./styles";
-import { useEffect, useState } from "react";
-import { Countdown } from "./components/Countdown";
 
 const newCycleFormValidationSchema = zod.object({
   task: zod.string().min(1, "Informe a tarefa"),
